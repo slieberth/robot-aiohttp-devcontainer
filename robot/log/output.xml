@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.2.2 (Python 3.10.12 on linux)" generated="2025-05-21T10:58:36.451240" rpa="false" schemaversion="5">
+<suite id="s1" name="Aiohttp Server Test" source="/workspaces/vs_code_container_test/robot/tests/aiohttp_server_test.robot">
+<test id="s1-t1" name="Start And Test Aiohttp Server" line="10">
+<kw name="Start Server" type="SETUP">
+<kw name="Start Process" owner="Process">
+<msg time="2025-05-21T10:58:36.508408" level="INFO">Starting process:
+python3 code/aiohttp_server.py</msg>
+<arg>python3</arg>
+<arg>${SERVER_FILE}</arg>
+<doc>Starts a new process on background.</doc>
+<status status="PASS" start="2025-05-21T10:58:36.508304" elapsed="0.001387"/>
+</kw>
+<kw name="Sleep" owner="BuiltIn">
+<msg time="2025-05-21T10:58:37.511273" level="INFO">Slept 1 second.</msg>
+<arg>1s</arg>
+<doc>Pauses the test executed for the given time.</doc>
+<status status="PASS" start="2025-05-21T10:58:36.509883" elapsed="1.001881"/>
+</kw>
+<status status="PASS" start="2025-05-21T10:58:36.508078" elapsed="1.004144"/>
+</kw>
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2025-05-21T10:58:37.514035" level="INFO">Creating Session using : alias=local, url=http://localhost:8080, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>local</arg>
+<arg>http://localhost:${SERVER_PORT}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-05-21T10:58:37.513275" elapsed="0.001490"/>
+</kw>
+<kw name="GET On Session" owner="RequestsLibrary">
+<msg time="2025-05-21T10:58:37.524761" level="INFO">GET Request : url=http://localhost:8080/ 
+ path_url=/ 
+ headers={'User-Agent': 'python-requests/2.32.3', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2025-05-21T10:58:37.525089" level="INFO">GET Response : url=http://localhost:8080/ 
+ status=200, reason=OK 
+ headers={'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '28', 'Date': 'Wed, 21 May 2025 10:58:37 GMT', 'Server': 'Python/3.10 aiohttp/3.11.18'} 
+ body={"message": "Hello, world!"} 
+ </msg>
+<msg time="2025-05-21T10:58:37.525439" level="INFO">${resp} = &lt;Response [200]&gt;</msg>
+<var>${resp}</var>
+<arg>local</arg>
+<arg>/</arg>
+<doc>Sends a GET request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-05-21T10:58:37.515197" elapsed="0.010303"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${resp}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2025-05-21T10:58:37.526258" elapsed="0.000586"/>
+</kw>
+<kw name="Should Be Equal As Strings" owner="BuiltIn">
+<arg>${resp.json()['message']}</arg>
+<arg>Hello, world!</arg>
+<doc>Fails if objects are unequal after converting them to strings.</doc>
+<status status="PASS" start="2025-05-21T10:58:37.527137" elapsed="0.000949"/>
+</kw>
+<kw name="Stop Server" type="TEARDOWN">
+<kw name="Terminate All Processes" owner="Process">
+<msg time="2025-05-21T10:58:37.529528" level="INFO">Gracefully terminating process.</msg>
+<msg time="2025-05-21T10:58:37.632827" level="INFO">Process completed.</msg>
+<doc>Terminates all still running processes started by this library.</doc>
+<status status="PASS" start="2025-05-21T10:58:37.529357" elapsed="0.103750"/>
+</kw>
+<status status="PASS" start="2025-05-21T10:58:37.528869" elapsed="0.104392"/>
+</kw>
+<status status="PASS" start="2025-05-21T10:58:36.507770" elapsed="1.125676"/>
+</test>
+<status status="PASS" start="2025-05-21T10:58:36.451770" elapsed="1.182439"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Aiohttp Server Test" id="s1" pass="1" fail="0" skip="0">Aiohttp Server Test</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

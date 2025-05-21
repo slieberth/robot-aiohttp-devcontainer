@@ -1,0 +1,22 @@
+{
+  "name": "my ubuntu dev environment",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "forwardPorts": [2232],
+  "runArgs": ["-p", "2232:22"],
+  "overrideCommand": false,
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": ["ms-python.python"],
+  "postCreateCommand": "echo 'Container Ready!'",
+  "features": {},
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "robocorp.robotframework-lsp"
+      ]
+    }
+  }
+}
