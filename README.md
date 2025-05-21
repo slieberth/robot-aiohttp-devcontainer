@@ -9,7 +9,7 @@ The goal is to provide a fully isolated development environment that makes it ea
 ## 🛠 Features
 
 - ✅ Preconfigured Devcontainer (Ubuntu + Python + SSH)
-- ✅ A simple `aiohttp` web server (`server.py`)
+- ✅ A simple `aiohttp` web server (`aiohttp_server.py`)
 - ✅ Robot Framework with `SSHLibrary`, `RequestsLibrary`, and `Process`
 - ✅ Automatic startup of SSH server inside the container (`entrypoint.sh`)
 - ✅ Sample test cases for HTTP and SSH login
@@ -56,24 +56,24 @@ robot robot/tests/aiohttp_server_test.robot
 ## 🧩 Project Structure
 
 ```text
-.devcontainer/
-├── devcontainer.json      # Devcontainer setup
-├── Dockerfile             # Base image with Python, pip, SSH server, etc.
-├── entrypoint.sh          # Starts the SSH service
+code/
+└── aiohttp_server.py       # aiohttp web server
 
 robot/
-├── tests/
-│   ├── aiohttp_server_test.robot
-│   └── ssh_login_test.robot
-server.py                  # aiohttp web server for testing
-README.md                  # This file 😉
+├── log/                    # Test output/log files
+└── tests/                  # Robot Framework test cases
+    ├── aiohttp_server_test.robot
+    └── demo_ssh.robot
+
+LICENSE
+README.md
 ```
 
 ---
 
 ## 🌐 Web Server (aiohttp)
 
-The included `server.py` starts a simple `aiohttp` web server with these endpoints:
+The included `aiohttp_server.py` starts a simple `aiohttp` web server with these endpoints:
 
 - `GET /` → `{"message": "Hello, world!"}`
 - `GET /user/<name>` → `{"greeting": "Hello, <name>!"}`
@@ -82,7 +82,7 @@ The included `server.py` starts a simple `aiohttp` web server with these endpoin
 To run it:
 
 ```bash
-python3 server.py
+python3 code/aiohttp_server.py
 ```
 
 ---
@@ -92,14 +92,14 @@ python3 server.py
 The Devcontainer includes a real OpenSSH server which starts automatically. You can access it like this:
 
 - Host: `localhost`
-- Port: `2222` (mapped via `-p 2222:22`)
+- Port: `2232` (mapped via `-p 2232:22`)
 - Username: `robot`
 - Password: `robot`
 
 Example:
 
 ```bash
-ssh robot@localhost -p 2222
+ssh robot@localhost -p 2232
 ```
 
 ---
