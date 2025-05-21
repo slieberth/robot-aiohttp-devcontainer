@@ -1,6 +1,0 @@
-__pycache__/
-.vscode/
-.env
-*.log
-*.pyc
-robot/log/
