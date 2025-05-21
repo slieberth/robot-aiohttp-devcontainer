@@ -110,13 +110,47 @@ ssh robot@localhost -p 2232
 *** Settings ***
 Library    SSHLibrary
 
+*** Variables ***
+${HOST}      localhost
+${PORT}      22
+${USER}      robot
+${PASSWORD}  robot
+
 *** Test Cases ***
-Login To SSH Server
-    Open Connection    localhost    port=2222
-    Login              robot    robot
-    ${whoami}=         Execute Command    whoami
-    Should Be Equal    ${whoami}    robot
+Login To Devcontainer SSH
+    Open Connection    ${HOST}    port=${PORT}
+    Login              ${USER}    ${PASSWORD}
+    ${output}=         Execute Command    whoami
+    Should Contain     ${output}    robot
     Close Connection
+```
+
+---
+
+## 🧪 Example Robot Test: Test Aiohttp Server
+
+```robot
+
+*** Variables ***
+${SERVER_FILE}    code/aiohttp_server.py
+${SERVER_PORT}    8080
+
+*** Test Cases ***
+Start And Test Aiohttp Server
+    [Setup]    Start Server
+    Create Session    local    http://localhost:${SERVER_PORT}
+    ${resp}=    GET On Session    local    /
+    Log To Console    ${resp}
+    Should Be Equal As Strings    ${resp.json()['message']}    Hello, world!
+    [Teardown]    Stop Server
+
+*** Keywords ***
+Start Server
+    Start Process    python3    ${SERVER_FILE}
+    Sleep    1s
+
+Stop Server
+    Terminate All Processes
 ```
 
 ---
